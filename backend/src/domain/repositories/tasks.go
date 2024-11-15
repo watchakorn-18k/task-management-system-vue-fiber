@@ -58,7 +58,7 @@ func (repo *taskRepo) GetAllTasks() (*[]entities.TaskModel, error) {
 
 func (repo *taskRepo) GetTask(taskID string) (*entities.TaskModel, error) {
 	var task entities.TaskModel
-	err := repo.Collection.FindOne(repo.Context, bson.M{"_id": taskID}).Decode(&task)
+	err := repo.Collection.FindOne(repo.Context, bson.M{"task_id": taskID}).Decode(&task)
 	if err != nil {
 		return nil, err
 	}
@@ -66,7 +66,7 @@ func (repo *taskRepo) GetTask(taskID string) (*entities.TaskModel, error) {
 }
 
 func (repo *taskRepo) EditTask(taskID string, data *entities.TaskModel) error {
-	filter := bson.M{"_id": taskID}
+	filter := bson.M{"task_id": taskID}
 	update := bson.M{"$set": data}
 	_, err := repo.Collection.UpdateOne(repo.Context, filter, update)
 	if err != nil {
@@ -76,7 +76,7 @@ func (repo *taskRepo) EditTask(taskID string, data *entities.TaskModel) error {
 }
 
 func (repo *taskRepo) DeleteTask(taskID string) error {
-	filter := bson.M{"_id": taskID}
+	filter := bson.M{"task_id": taskID}
 	_, err := repo.Collection.DeleteOne(repo.Context, filter)
 	if err != nil {
 		return err
