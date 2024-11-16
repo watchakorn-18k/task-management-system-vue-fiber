@@ -5,16 +5,12 @@ import { randomText } from "@/utils";
 
 const urlTasks = config.apiUrl + '/api/task';
 
-const tasks = ref([]);
-
-
 
 const getTasksAll = async () => {
     try {
         const response = await fetch(`${urlTasks}/get_all`);
         const data = await response.json();
-        tasks.value = data.data;
-        console.log(tasks.value);
+        return data.data
     } catch (err) {
         console.error('Error fetching tasks:', err);
     }
@@ -55,4 +51,4 @@ const deleteTask = async (taskId) => {
     }
 };
 
-export { tasks, getTasksAll, addTask, deleteTask };
+export { getTasksAll, addTask, deleteTask };
