@@ -60,11 +60,17 @@ func (sv *taskService) EditTask(taskID string, data *entities.TaskModel) error {
 	if err := sv.TaskRepo.EditTask(taskID, data); err != nil {
 		return err
 	}
+	if err := sv.SetTasks(); err != nil {
+		return err
+	}
 	return nil
 }
 
 func (sv *taskService) DeleteTask(taskID string) error {
 	if err := sv.TaskRepo.DeleteTask(taskID); err != nil {
+		return err
+	}
+	if err := sv.SetTasks(); err != nil {
 		return err
 	}
 	return nil

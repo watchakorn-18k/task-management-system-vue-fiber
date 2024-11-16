@@ -160,7 +160,7 @@ onMounted(async () => {
                 @click="openModalAddTask"><span class="pi pi-plus"></span></button>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 justify-center w-full md:max-w-[80%]">
+        <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 justify-center w-full md:max-w-[80%]">
             <span v-for="(task, index) in tasksAll" :key="task.task_id">
                 <Card :title="task.name" :details="task.details" v-model:status="task.status"
                     @remove-item="removeItem(index, task.task_id)" @editTaskEmit="openModalUpdateTask(task)"
