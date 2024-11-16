@@ -38,17 +38,22 @@ func main() {
 	app.Use(cors.New())
 
 	mongoDB := ds.NewMongoDB(10)
+	redisDB := ds.NewRedisConnection()
 
 	tasksRepo := repo.NewTaskRepository(mongoDB)
+	usersRepo := repo.NewUsersRepository(mongoDB)
 
-	taskSV := sv.NewTasksService(tasksRepo)
+	redisRepo := repo.NewRedisRepository(redisDB)
 
-	gateways.NewHTTPGateway(app, taskSV)
+	taskSV := sv.NewTasksService(tasksRepo, redisRepo)
+	usersSV := sv.NewUsersService(usersRepo)
+
+	gateways.NewHTTPGateway(app, taskSV, usersSV)
 
 	PORT := os.Getenv("PORT")
 	if PORT == "" {
 		PORT = "8080"
 	}
 
-	app.Listen("localhost:" + PORT)
+	app.Listen(":" + PORT)
 }

@@ -7,13 +7,16 @@ import (
 )
 
 type HTTPGateway struct {
-	TaskService service.ITasksService
+	TaskService  service.ITasksService
+	UsersService service.IUsersService
 }
 
-func NewHTTPGateway(app *fiber.App, taskService service.ITasksService) {
+func NewHTTPGateway(app *fiber.App, taskService service.ITasksService, usersService service.IUsersService) {
 	gateway := &HTTPGateway{
-		TaskService: taskService,
+		TaskService:  taskService,
+		UsersService: usersService,
 	}
 
 	RouteTask(*gateway, app)
+	RouteUsers(*gateway, app)
 }

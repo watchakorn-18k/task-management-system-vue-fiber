@@ -11,6 +11,8 @@ services:
   #   environment:
   #     - MONGODB_URI=mongodb://localhost:27017
   #     - DATABASE_NAME=demo
+        # - REDISREAD_URI=redis://localhost:6379
+        # - REDIS_URI=redis://localhost:6379
 
   mongo:
     image: mongo:latest
@@ -20,6 +22,15 @@ services:
     restart: always
     volumes:
       - mongo_data:/data/db
+  redis_cache:
+    image: redis:alpine
+    container_name: redis
+    restart: always
+    volumes:
+      - redis_volume_data:/data
+    ports:
+      - 6379:6379
 
 volumes:
   mongo_data:
+  redis_volume_data:
