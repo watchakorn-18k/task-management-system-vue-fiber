@@ -18,6 +18,7 @@ type usersRepo struct {
 type IUsersRepository interface {
 	RegisterUsers(data *entities.User) error
 	GetUser(userID string) (*entities.User, error)
+	GetUsername(username string) (*entities.User, error)
 	UpdateUsers(userID string, data *entities.User) error
 }
 
@@ -54,4 +55,13 @@ func (repo *usersRepo) UpdateUsers(userID string, data *entities.User) error {
 		return err
 	}
 	return nil
+}
+
+func (repo *usersRepo) GetUsername(username string) (*entities.User, error) {
+	var user entities.User
+	err := repo.Collection.FindOne(repo.Context, bson.M{"username": username}).Decode(&user)
+	if err != nil {
+		return nil, err
+	}
+	return &user, nil
 }

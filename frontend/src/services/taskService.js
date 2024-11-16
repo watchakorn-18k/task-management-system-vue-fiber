@@ -1,6 +1,5 @@
 
 import { config } from '@/config';
-import { ref } from 'vue';
 import { randomText } from "@/utils";
 
 const urlTasks = config.apiUrl + '/api/task';

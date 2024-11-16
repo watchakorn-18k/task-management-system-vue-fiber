@@ -2,12 +2,14 @@ package services
 
 import (
 	"errors"
+	"fmt"
 	"task_management_system/src/domain/entities"
 	"task_management_system/src/domain/repositories"
 	"task_management_system/src/infrastructure/generals"
 	"task_management_system/src/middlewares"
 
 	"github.com/google/uuid"
+	"go.mongodb.org/mongo-driver/mongo"
 )
 
 type usersService struct {
@@ -65,8 +67,9 @@ func (s *usersService) Login(data *entities.UserModel) (*string, error) {
 	if data.Username == "" || data.Password == "" {
 		return nil, errors.New("username or password is required")
 	}
-	userData, err := s.UsersRepo.GetUser(data.Username)
-	if err != nil {
+	fmt.Println("data: ", data)
+	userData, err := s.UsersRepo.GetUsername(data.Username)
+	if err != nil && err != mongo.ErrNoDocuments {
 		return nil, err
 	}
 	if userData == nil {
