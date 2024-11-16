@@ -12,21 +12,19 @@ defineProps({
     }
 
 })
-const emit = defineEmits(['update:status', 'remove-item']);
-const isOpen = ref(false);
-
-const updateStatus = (newStatus) => {
-    isOpen.value = false;
-    emit('update:status', newStatus);
-
-};
+const emit = defineEmits(['update:status', 'remove-item', 'editTaskEmit', 'updateStatusEmit']);
 
 const handleStatusChange = (event) => {
     const newStatus = event.target.value;
-    updateStatus(newStatus);
+    emit('update:status', newStatus);
+    emit('updateStatusEmit', newStatus);
 }
 const deleteCard = () => {
     emit('remove-item');
+}
+
+const handleEditTask = () => {
+    emit('editTaskEmit');
 }
 
 </script>
@@ -45,34 +43,22 @@ const deleteCard = () => {
 
         </div>
 
-        <div class="flex justify-end items-center">
-            <div class="flex flex-row items-center">
+        <div class="flex justify-between items-center m-8">
+
+            <div class="flex flex-row items-center gap-4">
                 <p>สถานะ</p>
-                <select class="select badge badge-outline h-10 m-4 cursor-pointer focus:outline-none" :class="{
-                    // 'hover:bg-primary': status === 'ทำอยู่',
-                    // 'hover:bg-success': status === 'ทำเสร็จแล้ว',
+                <select class="select badge badge-outline h-10 cursor-pointer focus:outline-none" :class="{
                     'badge-primary': status === 'ทำอยู่',
                     'badge-success': status === 'ทำเสร็จแล้ว',
                 }" @change="handleStatusChange">
-                    <!-- <option disabled>{{ status }}</option> -->
-                    <option class="text-base-300 selection:bg-pink-300">ทำอยู่</option>
-                    <option class="text-base-300">ทำเสร็จแล้ว</option>
-                </select>
-                <!-- <details className="dropdown" :open="isOpen" @toggle="syncOpenState" autofocus>
-                    <summary :class="{
-                        'hover:bg-primary': status === 'ทำอยู่',
-                        'hover:bg-success': status === 'ทำเสร็จแล้ว',
-                        'badge-primary': status === 'ทำอยู่',
-                        'badge-success': status === 'ทำเสร็จแล้ว',
 
-                    }" class="badge badge-outline m-4 hover:text-neutral-100 p-4 cursor-pointer">{{ status }}</summary>
-                    <ul
-                        className="menu dropdown-content bg-neutral-100 rounded-box z-[1] w-36 p-2 shadow border-neutral border-[1px]">
-                        <li @click="updateStatus('ทำอยู่')"><a class="text-primary">ทำอยู่</a></li>
-                        <li><a class="text-success" @click="updateStatus('ทำเสร็จแล้ว')">ทำเสร็จแล้ว</a></li>
-                    </ul>
-                </details> -->
+                    <option class="text-base-300 selection:bg-pink-300" :selected="status === 'ทำอยู่'">ทำอยู่</option>
+                    <option class="text-base-300" :selected="status === 'ทำเสร็จแล้ว'">ทำเสร็จแล้ว</option>
+                </select>
             </div>
+            <button
+                class="btn btn-square w-16 h-full border border-neutral-100 btn-sm hover:bg-neutral hover:text-neutral-100"
+                @click="handleEditTask">แก้ไข</button>
         </div>
 
     </div>

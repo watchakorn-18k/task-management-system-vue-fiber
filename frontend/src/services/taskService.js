@@ -51,4 +51,18 @@ const deleteTask = async (taskId) => {
     }
 };
 
-export { getTasksAll, addTask, deleteTask };
+const editTask = async (taskId, taskData) => {
+    try {
+        const response = await fetch(`${urlTasks}/edit_task/${taskId}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(taskData),
+        });
+    } catch (err) {
+        console.error('Error updating task:', err);
+    }
+};
+
+export { getTasksAll, addTask, deleteTask, editTask };
