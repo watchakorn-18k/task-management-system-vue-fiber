@@ -14,5 +14,6 @@ WORKDIR /
 COPY --from=builder /main /main
 COPY --from=builder /app/src/docs /src/docs
 COPY --from=builder /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
+EXPOSE 1818
 ENTRYPOINT ["/main"]
 
