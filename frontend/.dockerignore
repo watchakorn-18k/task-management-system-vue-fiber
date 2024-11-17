@@ -21,3 +21,5 @@ node_modules
 .DS_Store  # macOS
 Thumbs.db  # Windows
 
+*.env
+*.env.local
