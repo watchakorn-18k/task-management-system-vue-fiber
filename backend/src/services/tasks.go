@@ -51,7 +51,11 @@ func (sv *taskService) AddNewTask(data *entities.TaskModel) error {
 func (sv *taskService) GetAllTasks() (*[]entities.TaskModel, error) {
 	dataRedis, err := sv.RedisRepo.GetTasks()
 	if err != nil {
-		return sv.TaskRepo.GetAllTasks()
+		data, err := sv.TaskRepo.GetAllTasks()
+		if err != nil {
+			return nil, err
+		}
+		return data, nil
 	}
 	return dataRedis, nil
 }

@@ -19,11 +19,11 @@ bun install
 ### Compile and Hot-Reload for Development
 
 ```sh
-bun dev
+bun run dev
 ```
 
 ### Compile and Minify for Production
 
 ```sh
-bun build
+bun run build
 ```

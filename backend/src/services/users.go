@@ -18,7 +18,7 @@ type usersService struct {
 type IUsersService interface {
 	RegisterUsers(data *entities.UserModel) error
 	Login(data *entities.UserModel) (*string, error)
-	GetProfile(userID string) (*entities.User, error)
+	GetProfile(userID string) (entities.User, error)
 }
 
 func NewUsersService(usersRepo repositories.IUsersRepository) IUsersService {
@@ -89,6 +89,13 @@ func (s *usersService) Login(data *entities.UserModel) (*string, error) {
 	return jwt.Token, nil
 }
 
-func (s *usersService) GetProfile(userID string) (*entities.User, error) {
-	return s.UsersRepo.GetUser(userID)
+func (s *usersService) GetProfile(userID string) (entities.User, error) {
+	userData, err := s.UsersRepo.GetUser(userID)
+	if err != nil && err != mongo.ErrNoDocuments {
+		return entities.User{}, err
+	}
+	if userData.Username == "" {
+		return entities.User{}, errors.New("user not found")
+	}
+	return userData, nil
 }

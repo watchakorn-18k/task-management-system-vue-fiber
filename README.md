@@ -41,6 +41,9 @@ docker-compose -f frontend/docker-compose.yml up -d
 podman-compose -f frontend/docker-compose.yml up -d
 ```
 
+# Documentation Swagger API
+- http://localhost:1818/api/docs
+
 # ติดตั้ง backend และทดสอบรัน
 ```bash
 cd backend
