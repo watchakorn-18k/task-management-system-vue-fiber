@@ -45,21 +45,20 @@ paths:
           content:
             application/json:
               example:
-                message: "created successfully"
-  /update_user:
+                message: "Add New Task Success"
+  /edit_task/{task_id}:
     put:
       tags:
-        - user
-      description: Update user
-      summary: Update user
+        - Task
+      description: Update task
+      summary: Update task
       parameters:
         - in: query
-          name: user_id
+          name: task_id
           schema:
             type: string
-          value: CWEDS
+          value: task-R8Ih
           required: true
-          description: user_id for update
       requestBody:
         required: true
         content:
@@ -67,12 +66,9 @@ paths:
             examples:
               example_1:
                 value:
-                  username: tset12
-                  email: "12"
-              example_2:
-                value:
-                  username: tset13
-                  email: "12"
+                  name: tset12
+                  details: "12"
+                  status: "ทำอยู่"
 
       responses:
         "200":
@@ -80,69 +76,71 @@ paths:
           content:
             application/json:
               example:
-                message: updated successfully
+                message: Edit Task Success
 
-  /delete_user/{user_id}:
+  /delete_task/{task_id}:
     delete:
       tags:
-        - user
-      description: Delete user
-      summary: Delete user
+        - Task
+      description: Delete task
+      summary: Delete task
       parameters:
         - in: query
-          name: user_id
+          name: task_id
           schema:
             type: string
-          value: CWEDS
+          value: task-R8Ih
           required: true
-          description: The sales code name.
       responses:
         "200":
           description: OK
           content:
             application/json:
               example:
-                message: deleted successfully
-  /add_user:
+                message: Delete Task Success
+  /register:
     post:
       tags:
-        - user
-      description: Add user
-      summary: Add user
+        - User
+      description: Register user
+      summary: Register user
       requestBody:
         required: true
-        description: Add user
         content:
           application/json:
             example:
               username: tset12
-              email: "12"
+              password: "12"
+              password_confirm: "12"
       responses:
         "200":
           description: OK
           content:
             application/json:
               example:
-                message: "created successfully"
+                message: "Register User Success"
 
-  /check_ip:
-    get:
+  /login:
+    post:
       tags:
-        - ip
-      servers:
-        - url: /api/ip
-      description: Get ip
-      # security:
-      #   - bearerAuth: []
-      summary: Get ip
+        - User
+      description: Login
+      summary: Login
+      requestBody:
+        required: true
+        content:
+          application/json:
+            example:
+              username: tset12
+              password: "12"
       responses:
         "200":
           description: OK
           content:
             application/json:
               example:
-                message: success
-                data: 39.228.50.232
+                message: Login User Success
+                data: "JWT token"
 
 components:
   securitySchemes:
