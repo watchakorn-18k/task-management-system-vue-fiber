@@ -1,10 +1,8 @@
 <script setup>
-import { stateLogin, removeCookieUserJWT } from '@/utils/cookies.js';
+import { stateLogin, removeCookieUserJWT, getCookieUserJWT } from '@/utils/cookies.js';
 import { RouterLink, useRoute } from 'vue-router';
 
 const route = useRoute();
-
-console.log();
 
 const handleLogout = () => {
     removeCookieUserJWT();

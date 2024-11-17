@@ -29,6 +29,11 @@ const handleLogin = async () => {
         const res = await authLogin(userData.value);
         if (res === "password not match") {
             errorUser.value.errPassword = "Password ไม่ถูกต้อง";
+            return;
+        }
+        if (res === "username not found") {
+            errorUser.value.errUsername = "ไม่พบ Username ในระบบ";
+            return;
         }
         setCookieUserJWT(res);
         router.push("/");

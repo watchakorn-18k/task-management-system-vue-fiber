@@ -6,9 +6,9 @@ import { useRouter } from 'vue-router'
 const router = useRouter();
 
 const userData = ref({
-    username: "test_1234",
-    password: "test",
-    password_confirm: "test"
+    username: "",
+    password: "",
+    password_confirm: ""
 })
 const errorUser = ref({
     errUsername: "",
@@ -82,7 +82,7 @@ const handleUsername = async (e) => {
                 </label>
                 <ErrorUser :errorText="errorUser.errConfirmPassword" />
                 <span class="flex justify-end">
-                    <RouterLink to="/register" class="hover:underline hover:text-primary">กลับไปเข้าสู่ระบบ
+                    <RouterLink to="/login" class="hover:underline hover:text-primary">กลับไปเข้าสู่ระบบ
                     </RouterLink>
                 </span>
 

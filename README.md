@@ -41,8 +41,11 @@ docker-compose -f frontend/docker-compose.yml up -d
 podman-compose -f frontend/docker-compose.yml up -d
 ```
 
+# เรียกใช้งานเว็บ
+- [http://localhost](http://localhost)
+
 # Documentation Swagger API
-- http://localhost:1818/api/docs
+- [http://localhost:1818/api/docs](http://localhost:1818/api/docs)
 
 # ติดตั้ง backend และทดสอบรัน
 ```bash
@@ -61,6 +64,14 @@ npm run dev
 # bun
 bun install
 bun run dev
+
+# รัน ด้วย docker
+docker image prune
+docker-compose up --build --force-recreate --no-cache
+
+# รัน ด้วย podman
+podman image prune
+podman-compose up --build --force-recreate --no-cache
 ```
 
 
