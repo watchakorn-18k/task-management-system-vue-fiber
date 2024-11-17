@@ -1,6 +1,6 @@
 
 import { config } from '@/config';
-import { randomText } from "@/utils";
+import { randomText } from "@/utils/utils";
 
 const urlTasks = config.apiUrl + '/api/task';
 

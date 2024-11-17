@@ -13,6 +13,9 @@ const authLogin = async (data) => {
             body: JSON.stringify(data),
         });
         const result = await response.json();
+        if (!response.ok) {
+            return result.message
+        }
         return result.data;
     } catch (error) {
         console.error('Error:', error);
@@ -20,4 +23,24 @@ const authLogin = async (data) => {
     }
 }
 
-export { authLogin };
+const registerUsers = async (data) => {
+    try {
+        const response = await fetch(`${urlUsers}/register`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+        });
+        const result = await response.json();
+        if (!response.ok) {
+            return result.message
+        }
+        return result.data;
+    } catch (error) {
+        console.error('Error:', error);
+        throw error;
+    }
+}
+
+export { authLogin, registerUsers };

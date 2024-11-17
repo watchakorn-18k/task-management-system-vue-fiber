@@ -1,19 +1,20 @@
 version: '3.8'
 services:
-  # app:
-  #   build:
-  #     context: .
-  #     dockerfile: Dockerfile
-  #   ports:
-  #     - "8080:8080"
-  #   depends_on:
-  #     - mongo
-  #   environment:
-  #     - MONGODB_URI=mongodb://localhost:27017
-  #     - DATABASE_NAME=demo
-        # - REDISREAD_URI=redis://localhost:6379
-        # - REDIS_URI=redis://localhost:6379
-
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "1818:1818"
+    depends_on:
+      - mongo
+      - redis_cache
+    environment:
+      - MONGODB_URI=mongodb://mongo:27017
+      - DATABASE_NAME=demo
+      - REDISREAD_URI=redis://redis_cache:6379
+      - REDIS_URI=redis://redis_cache:6379
+      - PORT=1818
   mongo:
     image: mongo:latest
     container_name: mongo

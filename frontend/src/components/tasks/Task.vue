@@ -4,7 +4,8 @@ import Filter from './Filter.vue';
 import Search from './Search.vue';
 import { ref, onMounted } from 'vue';
 import { getTasksAll, addTask, deleteTask, editTask } from '@/services/taskService';
-import { randomText } from "@/utils";
+import { randomText } from "@/utils/utils";
+import { stateLogin } from '@/utils/cookies.js';
 
 const dataFormAddTask = ref({
     name: "",
@@ -157,7 +158,7 @@ onMounted(async () => {
             <Search @searchTaskEmit="searchTask" />
             <Filter @filterStatusEmit="filterStatus" />
             <button class="btn btn-primary w-full md:w-auto text-neutral-100 hover:bg-base-200 hover:border-neutral"
-                @click="openModalAddTask"><span class="pi pi-plus"></span></button>
+                @click="openModalAddTask" v-if="stateLogin.isLogin"><span class="pi pi-plus"></span></button>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 justify-center w-full md:max-w-[80%]">

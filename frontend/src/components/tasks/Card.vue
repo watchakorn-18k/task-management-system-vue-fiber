@@ -1,5 +1,6 @@
 <script setup>
 import { ref } from 'vue';
+import { stateLogin } from '@/utils/cookies.js';
 defineProps({
     title: {
         type: String,
@@ -35,7 +36,7 @@ const handleEditTask = () => {
 
                 <p class="font-bold text-lg text-base-100">{{ title }}</p>
                 <button class="btn btn-square btn-sm hover:bg-error hover:text-neutral-100 hover:border-error"
-                    @click="deleteCard">
+                    @click="deleteCard" v-if="stateLogin.isLogin">
                     X
                 </button>
             </div>
@@ -47,10 +48,13 @@ const handleEditTask = () => {
 
             <div class="flex flex-row items-center gap-4">
                 <p>สถานะ</p>
-                <select class="select badge badge-outline h-10 cursor-pointer focus:outline-none" :class="{
-                    'badge-primary': status === 'ทำอยู่',
-                    'badge-success': status === 'ทำเสร็จแล้ว',
-                }" @change="handleStatusChange">
+                <select class="select badge badge-outline h-10 cursor-pointer focus:outline-none disabled:badge-outline"
+                    :class="{
+                        'badge-primary': status === 'ทำอยู่',
+                        'badge-success': status === 'ทำเสร็จแล้ว',
+
+
+                    }" @change="handleStatusChange" :disabled="!stateLogin.isLogin">
 
                     <option class="text-base-300 selection:bg-pink-300" :selected="status === 'ทำอยู่'">ทำอยู่</option>
                     <option class="text-base-300" :selected="status === 'ทำเสร็จแล้ว'">ทำเสร็จแล้ว</option>
@@ -58,7 +62,7 @@ const handleEditTask = () => {
             </div>
             <button
                 class="btn btn-square w-16 h-full border border-neutral-100 btn-sm hover:bg-neutral hover:text-neutral-100"
-                @click="handleEditTask">แก้ไข</button>
+                @click="handleEditTask" v-if="stateLogin.isLogin">แก้ไข</button>
         </div>
 
     </div>
