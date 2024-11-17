@@ -20,5 +20,8 @@ RUN chmod +x node_modules/.bin/*
 # build app for production with minification
 RUN npm run build
 
+
+ENV VITE_API_URL=http://localhost:1818
+
 EXPOSE 8080
 CMD [ "http-server", "dist" ]
