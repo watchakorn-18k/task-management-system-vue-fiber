@@ -43,7 +43,7 @@ func (sv *taskService) AddNewTask(data *entities.TaskModel) error {
 		return err
 	}
 	if err := sv.SetTasks(); err != nil {
-		return err
+		fmt.Println(err)
 	}
 	return nil
 }
@@ -61,7 +61,7 @@ func (sv *taskService) EditTask(taskID string, data *entities.TaskModel) error {
 		return err
 	}
 	if err := sv.SetTasks(); err != nil {
-		return err
+		fmt.Println(err)
 	}
 	return nil
 }
@@ -71,7 +71,7 @@ func (sv *taskService) DeleteTask(taskID string) error {
 		return err
 	}
 	if err := sv.SetTasks(); err != nil {
-		return err
+		fmt.Println(err)
 	}
 	return nil
 }

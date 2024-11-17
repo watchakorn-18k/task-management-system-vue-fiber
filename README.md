@@ -11,6 +11,16 @@
 ```bash
 git clone https://github.com/watchakorn-18k/task-management-system-vue-fiber
 cd task-management-system-vue-fiber
+
+```
+
+# รัน mongodb กับ redis
+```bash
+# docker
+docker-compose -f backend/docker-database.yml up -d
+
+# podman
+podman-compose -f backend/docker-database.yml up -d
 ```
 
 # รัน backend

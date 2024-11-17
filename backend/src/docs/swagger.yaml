@@ -4,57 +4,48 @@ info:
   version: "1.0"
 servers:
   - url: /api/user
-  - url: /api/ip
+  - url: /api/task
 paths:
-  /users:
+  /get_all:
     get:
       tags:
-        - user
-      description: Get user all
+        - Task
+      description: Get all task
       # security:
       #   - bearerAuth: []
-      summary: Get user all
+      summary: Get all task
       responses:
         "200":
           description: OK
           content:
             application/json:
               example:
-              message: success
+              message: Get All Task Success
               data:
-                - user_id: CEYBZQQ
-                  username: tset12
-                  email: "12"
-  /get_user:
-    get:
+                - task_id: task-nbAU
+                  name: ซื้อของเข้าบ้าน
+                  details: "ไปซูเปอร์มาร์เก็ตเพื่อซื้อของจำเป็น"
+                  status: "ทำอยู่"
+  /add_task:
+    post:
       tags:
-        - user
-      security:
-        - bearerAuth: []
-      consumes:
-        - application/json
-      produces:
-        - application/json
-      parameters:
-        - name: user_id
-          in: query
-          schema:
-            type: string
-          required: true
-          description: user_id for find
-          value: CWEDS
-      summary: Get user by id
+        - Task
+      summary: Add task
+      requestBody:
+        required: true
+        description: Add task payload
+        content:
+          application/json:
+            example:
+              name: อ่านหนังสือ
+              details: อ่านหนังสือเรื่องการพัฒนาตนเอง 30 นาที
       responses:
         "200":
           description: OK
           content:
             application/json:
               example:
-                message: success
-                data:
-                  user_id: CEYBZQQ
-                  username: tset12
-                  email: "12"
+                message: "created successfully"
   /update_user:
     put:
       tags:
@@ -164,6 +155,7 @@ components:
       name: Authorization
 
 tags:
-  - name: user
+  - name: User
     description: User All endpoint
-  - name: ip
+  - name: Task
+    description: Task All endpoint
