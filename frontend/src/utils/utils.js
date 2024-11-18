@@ -1,3 +1,4 @@
+import { reactive } from 'vue';
 
 const randomText = (length) => {
     const chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
@@ -9,4 +10,8 @@ const randomText = (length) => {
     return result;
 };
 
-export { randomText };
+const state = reactive({
+    isLoading: false
+})
+
+export { randomText, state };

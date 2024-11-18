@@ -1,8 +1,9 @@
 <script setup>
 import { ref } from 'vue';
 import ErrorUser from '../ErrorUser.vue';
-import { registerUsers } from '@/services/userService'
-import { useRouter } from 'vue-router'
+import { registerUsers } from '@/services/userService';
+import { useRouter } from 'vue-router';
+import { state } from '@/utils/utils.js';
 const router = useRouter();
 
 const userData = ref({
@@ -41,14 +42,19 @@ const handleRegister = async () => {
         return;
     }
     try {
+        state.isLoading = true;
         errorUser.value.errConfirmPassword = "";
         const res = await registerUsers(userData.value);
         if (res === "username already exist") {
             errorUser.value.errUsername = `${userData.value.username} ถูกใช้ไปแล้ว`;
+            state.isLoading = false;
             return;
         }
+        state.isLoading = false;
         router.push("/login");
+
     } catch (error) {
+        state.isLoading = false;
         console.log(error);
     }
 }
@@ -67,18 +73,19 @@ const handleUsername = async (e) => {
                 <label class="input input-bordered flex items-center gap-2">
                     <span class="pi pi-user"></span>
                     <input type="text" class="grow" placeholder="Username" v-model="userData.username"
-                        v-on:input="handleUsername" />
+                        v-on:input="handleUsername" :disabled="state.isLoading" />
                 </label>
                 <ErrorUser :errorText="errorUser.errUsername" />
                 <label class="input input-bordered flex items-center gap-2">
                     <span class="pi pi-key"></span>
-                    <input type="password" class="grow" placeholder="Password" v-model="userData.password" />
+                    <input type="password" class="grow" placeholder="Password" v-model="userData.password"
+                        :disabled="state.isLoading" />
                 </label>
                 <ErrorUser :errorText="errorUser.errPassword" />
                 <label class="input input-bordered flex items-center gap-2">
                     <span class="pi pi-key"></span>
                     <input type="password" class="grow" placeholder="ยืนยัน Password"
-                        v-model="userData.password_confirm" />
+                        v-model="userData.password_confirm" :disabled="state.isLoading" />
                 </label>
                 <ErrorUser :errorText="errorUser.errConfirmPassword" />
                 <span class="flex justify-end">
@@ -86,7 +93,9 @@ const handleUsername = async (e) => {
                     </RouterLink>
                 </span>
 
-                <button type="submit" class="btn w-full btn-primary text-white">ลงทะเบียนสมาชิก</button>
+                <button type="submit" class="btn w-full btn-primary text-white"
+                    :disabled="state.isLoading">ลงทะเบียนสมาชิก<span class="loading loading-spinner loading-md"
+                        v-if="state.isLoading"></span></button>
             </form>
         </div>
 

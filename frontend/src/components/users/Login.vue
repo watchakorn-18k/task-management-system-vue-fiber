@@ -4,8 +4,10 @@ import ErrorUser from '../ErrorUser.vue';
 import { authLogin } from '@/services/userService'
 import { setCookieUserJWT } from '@/utils/cookies.js';
 import { useRouter } from 'vue-router'
+import { state } from '@/utils/utils.js';
 
 const router = useRouter();
+
 
 const userData = ref({
     username: "",
@@ -26,21 +28,25 @@ const handleLogin = async () => {
         return;
     }
     try {
+        state.isLoading = true;
         const res = await authLogin(userData.value);
         if (res === "password not match") {
             errorUser.value.errPassword = "Password ไม่ถูกต้อง";
+            state.isLoading = false;
             return;
         }
         if (res === "username not found") {
             errorUser.value.errUsername = "ไม่พบ Username ในระบบ";
+            state.isLoading = false;
             return;
         }
         setCookieUserJWT(res);
+        state.isLoading = false;
         router.push("/");
 
     } catch (error) {
+        state.isLoading = false;
         console.log(error);
-
     }
 }
 </script>
@@ -53,19 +59,22 @@ const handleLogin = async () => {
                 class="flex flex-col justify-center gap-2 m-2 w-full sm:w-1/2 md:w-1/4 ">
                 <label class="input input-bordered flex items-center gap-2">
                     <span class="pi pi-user"></span>
-                    <input type="text" class="grow" placeholder="Username" v-model="userData.username" />
+                    <input type="text" class="grow" placeholder="Username" v-model="userData.username"
+                        :disabled="state.isLoading" />
                 </label>
                 <ErrorUser :errorText="errorUser.errUsername" />
                 <label class="input input-bordered flex items-center gap-2">
                     <span class="pi pi-key"></span>
-                    <input type="password" class="grow" placeholder="Password" v-model="userData.password" />
+                    <input type="password" class="grow" placeholder="Password" v-model="userData.password"
+                        :disabled="state.isLoading" />
                 </label>
                 <ErrorUser :errorText="errorUser.errPassword" />
                 <span class="flex justify-end">
                     <RouterLink to="/register" class="hover:underline hover:text-primary">สมัครสมาชิก
                     </RouterLink>
                 </span>
-                <button type="submit" class="btn w-full btn-primary text-white">เข้าสู่ระบบ</button>
+                <button type="submit" class="btn w-full btn-primary text-white" :disabled="state.isLoading">เข้าสู่ระบบ
+                    <span class="loading loading-spinner loading-md" v-if="state.isLoading"></span></button>
             </form>
         </div>
 

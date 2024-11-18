@@ -6,12 +6,14 @@ import { ref, onMounted } from 'vue';
 import { getTasksAll, addTask, deleteTask, editTask } from '@/services/taskService';
 import { randomText } from "@/utils/utils";
 import { stateLogin } from '@/utils/cookies.js';
+import { state } from '@/utils/utils.js';
 
 const dataFormAddTask = ref({
     name: "",
     details: "",
     status: "ทำอยู่"
 });
+state.isLoading = true;
 
 const dataFormUpdateTask = ref({});
 
@@ -84,9 +86,14 @@ const updateStatus = async (task_id, status) => {
     await editTask(task_id, { status });
 }
 
-onMounted(async () => {
+const handleLoadTask = async () => {
     tasksSetup.value = await getTasksAll();
     tasksAll.value = tasksSetup.value
+    state.isLoading = false;
+}
+
+onMounted(async () => {
+    await handleLoadTask();
 });
 
 </script>
@@ -160,8 +167,18 @@ onMounted(async () => {
             <button class="btn btn-primary w-full md:w-auto text-neutral-100 hover:bg-base-200 hover:border-neutral"
                 @click="openModalAddTask" v-if="stateLogin.isLogin"><span class="pi pi-plus"></span></button>
         </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 justify-center w-full md:max-w-[80%]"
+            v-if="state.isLoading">
+            <div class="skeleton w-full h-60"></div>
+            <div class="skeleton w-full h-60"></div>
+            <div class="skeleton w-full h-60"></div>
+            <div class="skeleton w-full h-60"></div>
+            <div class="skeleton w-full h-60"></div>
+            <div class="skeleton w-full h-60"></div>
+        </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 justify-center w-full md:max-w-[80%]">
+
             <span v-for="(task, index) in tasksAll" :key="task.task_id">
                 <Card :title="task.name" :details="task.details" v-model:status="task.status"
                     @remove-item="removeItem(index, task.task_id)" @editTaskEmit="openModalUpdateTask(task)"
