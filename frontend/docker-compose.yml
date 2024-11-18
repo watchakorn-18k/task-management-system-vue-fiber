@@ -4,7 +4,9 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+      args:
+        VITE_API_URL: http://localhost:1818
     ports:
       - "80:8080"
     environment:
-      - VITE_API_URL=http://0.0.0.0:1818
+      - VITE_API_URL=http://localhost:1818

@@ -3,6 +3,8 @@ FROM node:lts-alpine
 # install simple http server for serving static content
 RUN npm install -g http-server
 
+ARG VITE_API_URL
+
 # make the 'app' folder the current working directory
 WORKDIR /app
 
