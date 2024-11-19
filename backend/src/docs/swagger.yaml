@@ -141,6 +141,30 @@ paths:
               example:
                 message: Login User Success
                 data: "JWT token"
+  /get_profile:
+    get:
+      tags:
+        - User
+      description: Get profile user
+      summary: Get profile user
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              example:
+                message: "Get Profile Success"
+                data:
+                  user_id: e4ca13bb-c1e7-4354-862-sdasd
+                  username: tset12
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              example:
+                message: "Unauthorization Token."
 
 components:
   securitySchemes:
